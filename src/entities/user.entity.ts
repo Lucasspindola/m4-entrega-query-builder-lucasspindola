@@ -8,7 +8,9 @@ import {
   BeforeInsert,
   DeleteDateColumn,
   BeforeUpdate,
+  OneToMany,
 } from "typeorm";
+import { SchedulesUsersProperties } from "./schedules_users_properties.entity";
 
 @Entity("users")
 class User {
@@ -42,6 +44,8 @@ class User {
   hashPassword() {
     this.password = hashSync(this.password, 10);
   }
+  @OneToMany(() => SchedulesUsersProperties, (schedules) => schedules.user)
+  schedules: SchedulesUsersProperties;
 }
 
 export { User };
