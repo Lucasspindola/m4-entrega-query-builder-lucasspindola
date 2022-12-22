@@ -1,21 +1,20 @@
 import { ICategoryRequest } from "../../interfaces/categories";
+import AppDataSource from "../../data-source";
+import { Category } from "../../entities/categories.entity";
+import { AppError } from "../../errors/AppError";
 
-const createNewCategoryService = async (dataUser: ICategoryRequest) => {
-  // const repositoryUser = AppDataSource.getRepository(User);
-  // const findUser = await repositoryUser.findOne({
-  //   where: { email: dataUser.email },
-  //   withDeleted: true,
-  // });
-  // if (findUser) {
-  //   throw new AppError(400, "user exists");
-  // }
-  // const user = repositoryUser.create(dataUser);
-  // await repositoryUser.save(user);
-  // const userWithoutPasswordField =
-  //   await userWithoutPasswordFieldSerializer.validate(user, {
-  //     stripUnknown: true,
-  //   });
-  // return userWithoutPasswordField;
+const createNewCategoryService = async (dataCategory: ICategoryRequest) => {
+  const repositoryCategory = AppDataSource.getRepository(Category);
+  const findCategory = await repositoryCategory.findOneBy({
+    name: dataCategory.name,
+  });
+  if (findCategory) {
+    throw new AppError(401, "User already exists");
+  }
+  const category = repositoryCategory.create(dataCategory);
+  await repositoryCategory.save(category);
+
+  return "category created successfully";
 };
 
 export default createNewCategoryService;

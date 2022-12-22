@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
   PrimaryGeneratedColumn,
   JoinColumn,
+  ManyToOne,
 } from "typeorm";
 import { Address } from "./addresses.entity";
 import { Category } from "./categories.entity";
@@ -35,9 +36,10 @@ class Property {
   @OneToOne(() => Address, (adresses) => adresses)
   @JoinColumn()
   address: Address;
-  @OneToOne(() => Category, (category) => category)
-  @JoinColumn()
-  category: Category;
+
+  @ManyToOne(() => Category)
+  category: Category["id"];
+
   @OneToMany(() => SchedulesUsersProperties, (schedule) => schedule.property)
   schedule: SchedulesUsersProperties;
 }
