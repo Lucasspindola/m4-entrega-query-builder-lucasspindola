@@ -18,7 +18,8 @@ const listOfAllPropertiesOfACategoryController = async (
   req: Request,
   res: Response
 ) => {
-  const allProperties = await listOfAllPropertiesOfACategoryService();
+  const idCategory = req.params.id;
+  const allProperties = await listOfAllPropertiesOfACategoryService(idCategory);
   res.json(allProperties);
 };
 export {

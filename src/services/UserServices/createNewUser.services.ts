@@ -16,7 +16,7 @@ const createNewUserService = async (
   });
 
   if (findUser) {
-    throw new AppError(400, "user exists");
+    throw new AppError(409, "user exists");
   }
 
   const user = repositoryUser.create(dataUser);

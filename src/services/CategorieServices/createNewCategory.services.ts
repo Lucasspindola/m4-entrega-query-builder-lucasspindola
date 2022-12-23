@@ -9,12 +9,14 @@ const createNewCategoryService = async (dataCategory: ICategoryRequest) => {
     name: dataCategory.name,
   });
   if (findCategory) {
-    throw new AppError(401, "User already exists");
+    throw new AppError(409, "User already exists");
   }
   const category = repositoryCategory.create(dataCategory);
   await repositoryCategory.save(category);
-
-  return "category created successfully";
+  const categoryRegistred = await repositoryCategory.findOneBy({
+    name: dataCategory.name,
+  });
+  return categoryRegistred;
 };
 
 export default createNewCategoryService;

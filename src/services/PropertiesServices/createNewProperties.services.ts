@@ -6,11 +6,11 @@ import { AppError } from "../../errors/AppError";
 import { IPropertyRequest } from "../../interfaces/properties";
 
 const createNewPropertiesService = async (dataProperties: IPropertyRequest) => {
-  if (dataProperties.address.zipCode.length > 7) {
-    throw new AppError(401, "number of characters exceeded");
+  if (dataProperties.address.zipCode.length > 8) {
+    throw new AppError(400, "number of characters exceeded");
   }
   if (dataProperties.address.state.length > 2) {
-    throw new AppError(401, "number of characters exceeded");
+    throw new AppError(400, "number of characters exceeded");
   }
   const repositoryProperties = AppDataSource.getRepository(Property);
   const repositoryAddres = AppDataSource.getRepository(Address);
@@ -27,7 +27,7 @@ const createNewPropertiesService = async (dataProperties: IPropertyRequest) => {
   });
 
   if (findProperties) {
-    throw new AppError(401, "There is already a property with this address");
+    throw new AppError(409, "There is already a property with this address");
   }
   const dataAddress = repositoryAddres.create(dataProperties.address);
   const saveAddress = await repositoryAddres.save(dataAddress);

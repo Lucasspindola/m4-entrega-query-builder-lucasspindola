@@ -11,8 +11,9 @@ const loginSessionService = async ({
   password,
 }: IUserLogin): Promise<string> => {
   const repositoryUser = AppDataSource.getRepository(User);
-  const user = await repositoryUser.findOneBy({
-    email: email,
+  const user = await repositoryUser.findOne({
+    where: { email: email },
+    withDeleted: true,
   });
 
   if (!user) {
@@ -23,6 +24,9 @@ const loginSessionService = async ({
 
   if (!passwordCombined) {
     throw new AppError(403, "user or password invalid");
+  }
+  if (!user.isActive) {
+    throw new AppError(400, "user desatived");
   }
   const token = jwt.sign(
     {
