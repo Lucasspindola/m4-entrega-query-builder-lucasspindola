@@ -7,8 +7,11 @@ const scheduleAVisitToThePropertyController = async (
   res: Response
 ) => {
   const dataScheduleaVisit = req.body;
+  const userId = req.user.id;
+  // não esta pegando o user aqui
   const responseClient = await scheduleAVisitToThePropertyService(
-    dataScheduleaVisit
+    dataScheduleaVisit,
+    userId
   );
   return res.status(201).json(responseClient);
 };

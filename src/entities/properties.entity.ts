@@ -42,7 +42,7 @@ class Property {
   category: Category["id"];
 
   @OneToMany(() => SchedulesUsersProperties, (schedule) => schedule.property)
-  schedule: SchedulesUsersProperties;
+  schedule: SchedulesUsersProperties[];
 }
 
 export { Property };
