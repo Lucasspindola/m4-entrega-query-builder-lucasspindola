@@ -17,10 +17,10 @@ categoriesRoutes.post(
   createNewCategoryController
 );
 categoriesRoutes.get("", listCategoriesController);
-// categoriesRoutes.get(
-//   "/:id/properties",
-//   // invaliIdCategoryMiddlewares,
-//   listOfAllPropertiesOfACategoryController
-// );
+categoriesRoutes.get(
+  "/:id/properties",
+  invaliIdCategoryMiddlewares,
+  listOfAllPropertiesOfACategoryController
+);
 
 export default categoriesRoutes;

@@ -10,7 +10,7 @@ const scheduleAVisitToThePropertyController = async (
   const responseClient = await scheduleAVisitToThePropertyService(
     dataScheduleaVisit
   );
-  //   return res.status(201).json(responseClient);
+  return res.status(201).json(responseClient);
 };
 
 const schedulingListOfAPropertyController = async (

@@ -38,6 +38,7 @@ class Property {
   address: Address;
 
   @ManyToOne(() => Category)
+  @JoinColumn()
   category: Category["id"];
 
   @OneToMany(() => SchedulesUsersProperties, (schedule) => schedule.property)

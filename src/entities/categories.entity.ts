@@ -8,8 +8,8 @@ class Category {
   @Column({ unique: true })
   name: string;
 
-  @OneToMany(() => Property, (properties) => properties)
-  property: Property[];
+  @OneToMany(() => Property, (properties) => properties.category)
+  properties: Property[];
 }
 
 export { Category };
