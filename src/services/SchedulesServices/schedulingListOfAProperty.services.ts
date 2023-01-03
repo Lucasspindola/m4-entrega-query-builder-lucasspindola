@@ -1,21 +1,30 @@
 // schedulingListOfAPropertyController
 
-const schedulingListOfAPropertyControllerService = async () => {
-  // const repositoryUser = AppDataSource.getRepository(User);
-  // const findUser = await repositoryUser.findOne({
-  //   where: { email: dataUser.email },
-  //   withDeleted: true,
-  // });
-  // if (findUser) {
-  //   throw new AppError(400, "user exists");
-  // }
-  // const user = repositoryUser.create(dataUser);
-  // await repositoryUser.save(user);
-  // const userWithoutPasswordField =
-  //   await userWithoutPasswordFieldSerializer.validate(user, {
-  //     stripUnknown: true,
-  //   });
-  // return userWithoutPasswordField;
+import AppDataSource from "../../data-source";
+import { Property } from "../../entities/properties.entity";
+import { SchedulesUsersProperties } from "../../entities/schedules_users_properties.entity";
+import { AppError } from "../../errors/AppError";
+
+const schedulingListOfAPropertyService = async (propertyId: string) => {
+  const repositorySchedule = AppDataSource.getRepository(
+    SchedulesUsersProperties
+  );
+  const repositoryProperties = AppDataSource.getRepository(Property);
+
+  const existsPropertySchedule = await repositoryProperties.findOneBy({
+    id: propertyId,
+  });
+
+  if (!existsPropertySchedule) {
+    throw new AppError(404, "non-existent schedule");
+  }
+
+  const allSchedules = await repositoryProperties.findOne({
+    relations: { schedule: true },
+    where: { id: propertyId },
+  });
+
+  return allSchedules;
 };
 
-export default schedulingListOfAPropertyControllerService;
+export default schedulingListOfAPropertyService;

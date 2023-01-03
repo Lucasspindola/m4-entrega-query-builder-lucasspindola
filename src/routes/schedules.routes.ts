@@ -3,6 +3,7 @@ import {
   scheduleAVisitToThePropertyController,
   schedulingListOfAPropertyController,
 } from "../controllers/schedules.controllers";
+import adminPrivateRouteCheckMiddlewar from "../middlewares/adminPrivateRouteCheck.middlewares";
 import validityCheckOfUserByTokenMiddlewares from "../middlewares/validityCheckOfUserByToken.middlewares";
 import verifyIfPropertyExistsMiddlewares from "../middlewares/verifyIfPropertyExists.middlewares";
 
@@ -12,7 +13,12 @@ schedulesRoutes.post(
   validityCheckOfUserByTokenMiddlewares,
   scheduleAVisitToThePropertyController
 );
-// schedulesRoutes.get("/properties/:id", schedulingListOfAPropertyController);
+schedulesRoutes.get(
+  "/properties/:id",
+  validityCheckOfUserByTokenMiddlewares,
+  adminPrivateRouteCheckMiddlewar,
+  schedulingListOfAPropertyController
+);
 
 export default schedulesRoutes;
 
