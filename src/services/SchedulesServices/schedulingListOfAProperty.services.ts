@@ -20,7 +20,7 @@ const schedulingListOfAPropertyService = async (propertyId: string) => {
   }
 
   const allSchedules = await repositoryProperties.findOne({
-    relations: { schedule: true },
+    relations: { schedules: true },
     where: { id: propertyId },
   });
 

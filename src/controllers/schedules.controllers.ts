@@ -10,7 +10,7 @@ const scheduleAVisitToThePropertyController = async (
   const userId = req.user.id;
 
   await scheduleAVisitToThePropertyService(dataScheduleaVisit, userId);
-  console.log(scheduleAVisitToThePropertyService);
+
   return res.status(201).json({ message: "dsd" });
 };
 
@@ -20,7 +20,7 @@ const schedulingListOfAPropertyController = async (
 ) => {
   const propertyId = req.params.id;
   const listScheduling = await schedulingListOfAPropertyService(propertyId);
-  return res.status(201).json(listScheduling);
+  return res.status(200).json(listScheduling);
 };
 export {
   scheduleAVisitToThePropertyController,

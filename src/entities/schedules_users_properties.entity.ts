@@ -13,15 +13,17 @@ class SchedulesUsersProperties {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @CreateDateColumn({ type: "date" })
-  date: Date;
+  @Column({ type: "date" })
+  date: string;
 
   @Column({ type: "time" })
-  hour: Date;
+  hour: string;
 
-  @ManyToOne(() => Property, { eager: true })
+  @ManyToOne(() => Property, (properties) => properties.schedules, {
+    eager: true,
+  })
   property: Property;
-  @ManyToOne(() => User, { eager: true })
+  @ManyToOne(() => User, (users) => users.schedules, { eager: true })
   user: User;
 }
 

@@ -27,7 +27,7 @@ const scheduleAVisitToThePropertyService = async (
   }
 
   const formatedDate = new Date(date);
-  console.log(formatedDate);
+
   if (formatedDate.getDay() < 1 || formatedDate.getDay() > 5) {
     throw new AppError(
       400,
@@ -40,27 +40,6 @@ const scheduleAVisitToThePropertyService = async (
     SchedulesUsersProperties
   );
   const repositoryProperties = AppDataSource.getRepository(Property);
-  // ..
-  // const existschAlready = await repositorySchedule.findOneBy({
-  //   date: new Date(date),
-  // });
-  // erro find
-  // const existschAlready = await AppDataSource.createQueryBuilder()
-  //   .select("date")
-  //   .from(SchedulesUsersProperties, "date")
-  //   .where("date=:date", { date: date })
-  //   .getOne();
-
-  // const existschAlready = await AppDataSource.createQueryBuilder()
-  //   .select("date")
-  //   .from(SchedulesUsersProperties, "date")
-  //   .where("date = :date", { date: date })
-  //   .getOne();
-  // console.log(existschAlready, "AQUI############******");
-
-  // if (existschAlready) {
-  //   throw new AppError(409, "Date or time unavailable");
-  // }
 
   const user = await repositoryUser.findOne({ where: { id: userId } });
 
@@ -76,11 +55,24 @@ const scheduleAVisitToThePropertyService = async (
     throw new AppError(404, "Property does not exist in our database.");
   }
 
+  const findPropertyDate = await repositoryProperties
+    .createQueryBuilder("properties")
+    .leftJoinAndSelect("properties.schedules", "schedules")
+    .where("properties.id = :id", { id: propertyId })
+    .andWhere("schedules.hour = :hour", { hour: dataScheduleaVisit.hour })
+    .andWhere("schedules.date = :date", { date: dataScheduleaVisit.date })
+    .getOne();
+
+  if (findPropertyDate) {
+    throw new AppError(409, "indisponivel");
+  }
+
   const findUserSchedule = await repositoryUser
     .createQueryBuilder("users")
     .leftJoinAndSelect("users.schedules", "schedules")
-    .where("schedules.date = :date", { date })
-    .andWhere("schedules.hour = :hour", { hour })
+    .where("users.id = :id", { id: userId })
+    .andWhere("schedules.date = :date", { date: dataScheduleaVisit.date })
+    .andWhere("schedules.hour = :hour", { hour: dataScheduleaVisit.hour })
     .getOne();
 
   if (findUserSchedule) {
