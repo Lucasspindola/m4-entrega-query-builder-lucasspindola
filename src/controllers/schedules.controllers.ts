@@ -11,7 +11,7 @@ const scheduleAVisitToThePropertyController = async (
 
   await scheduleAVisitToThePropertyService(dataScheduleaVisit, userId);
 
-  return res.status(201).json({ message: "dsd" });
+  return res.status(201).json({ message: "successful appointment" });
 };
 
 const schedulingListOfAPropertyController = async (
