@@ -64,7 +64,7 @@ const scheduleAVisitToThePropertyService = async (
     .getOne();
 
   if (findPropertyDate) {
-    throw new AppError(409, "indisponivel");
+    throw new AppError(409, "Property schedule already exists");
   }
 
   const findUserSchedule = await repositoryUser
