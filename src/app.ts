@@ -16,4 +16,5 @@ app.use("/categories", categoriesRoutes);
 app.use("/properties", propertiesRoutes);
 app.use("/schedules", schedulesRoutes);
 app.use(handleError);
+app.use(express.static("documentt"));
 export default app;
